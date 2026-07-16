@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Generator</title>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Container Card */
+    .qr-card {
+      background: #ffffff;
+      padding: 35px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .qr-card:hover {
+      transform: translateY(-2px);
+    }
+
+    h2 {
+      color: #2c3e50;
+      font-size: 24px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      color: #7f8c8d;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    /* Input Styling */
+    .input-field {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #333;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    /* Button Styling */
+    button {
+      width: 100%;
+      background: #4f46e5;
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background: #4338ca;
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* QR Code Result Box */
+    .qr-result-box {
+      margin-top: 10px;
+      padding: 15px;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+      min-height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Image responsive constraint */
+    #qrImage {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    #qrImage[src=""], #qrImage:not([src]) {
+      display: none;
+    }
+
+    /* Placeholder text when image is empty */
+    #qrImage[src=""] + .placeholder, #qrImage:not([src]) + .placeholder {
+      display: block;
+    }
+
+    .placeholder {
+      display: none;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="qr-card">
+    <h2>Generate QR</h2>
+    <p class="subtitle">Enter the fields below to quickly generate a custom QR code.</p>
+
+    <input id="name" class="input-field" placeholder="Enter Name">
+    <input id="id" class="input-field" placeholder="Enter ID">
+
+    <button onclick="generateQR()">Generate QR</button>
+
+    <div class="qr-result-box">
+      <img id="qrImage" alt="Generated QR Code" />
+      <span class="placeholder">Your QR Code will appear here</span>
+    </div>
+  </div>
+
+  <script>
+  function generateQR() {
+    const name = document.getElementById("name").value;
+    const id = document.getElementById("id").value;
+
+    document.getElementById("qrImage").src = "";
+
+    fetch("http://localhost:3000/qr/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, id })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+
+      document.getElementById("qrImage").src = data.qrImage;
+
+      // clear inputs
+      document.getElementById("name").value = "";
+      document.getElementById("id").value = "";
+    });
+  }
+  </script>
+
+</body>
+</html>

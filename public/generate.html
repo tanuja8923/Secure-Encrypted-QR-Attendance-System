@@ -157,7 +157,7 @@
 
     document.getElementById("qrImage").src = "";
 
-    fetch("http://localhost:3000/qr/generate", {
+    fetch("/qr/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

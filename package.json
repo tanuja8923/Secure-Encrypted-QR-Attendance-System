@@ -1,8 +1,8 @@
 {
   "name": "qr-project",
   "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "description": "Secure Encrypted QR-Based Attendance Management System using Node.js, Express.js, MongoDB Atlas, and AES-256 Encryption",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

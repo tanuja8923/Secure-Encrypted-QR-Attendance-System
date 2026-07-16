@@ -158,7 +158,7 @@
               // QR mil gaya -> scanner stop
               await html5QrCode.stop();
 
-              fetch("http://localhost:3000/qr/scan", {
+              fetch("/qr/scan", {
                   method: "POST",
                   headers: {
                       "Content-Type": "application/json"

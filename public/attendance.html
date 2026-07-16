@@ -58,7 +58,7 @@
 async function loadAttendance() {
 
     const response =
-        await fetch("http://localhost:3000/attendance");
+        await fetch("/attendance");
 
     const data = await response.json();
 
@@ -84,7 +84,7 @@ async function loadAttendance() {
 // CSV Download
 function downloadExcel() {
     window.location.href =
-    "http://localhost:3000/export";
+    "/export";
 }
 
 // har 2 second me refresh

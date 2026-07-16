@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const QRCode = require("qrcode");
 const crypto = require("crypto");
+const path = require("path");
 
 require("dotenv").config();
 
@@ -93,6 +94,10 @@ app.post("/qr/generate", async (req, res) => {
     }
 
 });
+app.get("/", (req,res)=>{
+    res.sendFile(path.join(__dirname,"public","index.html"));
+});
+
 
 
 // =========================
